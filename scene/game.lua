@@ -2,11 +2,12 @@ local layer = {}
 local notes = {}
 local hit = {}
 local time = 0
+local audiotime = 0
 local hitboxpos = 0
 local foresight = 0
 local colors = {}
 local nextnote = {1,1,1}
-local audio = nil
+local audio
 
 local counts = {}
 local acc_counts = {} -- not accounts, acc counts!
@@ -32,15 +33,15 @@ function layer.load(scenes,tween)
     colors = scenes.globaldata:get("colors")
 
     audio = love.audio.newSource(scenes.globaldata:get("audio"),"stream")
-    audio:play()
 
     upscale = scenes.globaldata:get("upscale")
     hit = {}
-    time = 0
+    time = -1000
 
     images.target = love.graphics.newImage("assets/target.png")
     images.hitcircle = love.graphics.newImage("assets/hitcircle.png")
     images.overlay = love.graphics.newImage("assets/hitcircleoverlay.png")
+    images.gradient = love.graphics.newImage("assets/gradient.png")
     images.bg = love.graphics.newImage("assets/bg.png")
 
     images.arrows = {}
@@ -85,7 +86,15 @@ end
 
 function layer.update(dt)
     --time = time + (dt*1000)
-    time = audio:tell()*1000
+    if not audiotime == audio:tell()*1000 then
+        time = audio:tell()*1000 
+    elseif audio:isPlaying() or time < 0 then
+        time = time + dt*1000
+    end
+    if time < 1 and time > 0 and not audio:isPlaying() then
+        audio:play()
+    end
+    audiotime = audio:tell()*1000
 
     if layer.scenes.globaldata:handlekey("w") then
         presskey(1)
@@ -96,9 +105,27 @@ function layer.update(dt)
     elseif layer.scenes.globaldata:handlekey("d") then
         presskey(4)
     end
+
+    if layer.scenes.globaldata:handlekey("p") then
+        if audio:isPlaying() then   
+            audio:pause()
+        else
+            audio:play()
+        end
+    end
+    if layer.scenes.globaldata:handlekey("r") and not audio:isPlaying() then 
+        audio:stop()
+        layer.scenes:switch("selector",layer.scenes)
+    end
+
+    if time > audio:getDuration()*1000 then
+        audio:stop()
+        layer.scenes:switch("selector",layer.scenes)
+    end
 end
 function layer.draw()
     love.graphics.setColor(1,1,1,1)
+    love.graphics.draw(images.gradient,0,0,0,upscale,upscale)
     love.graphics.draw(images.bg,0,0,0,upscale,upscale)
     
     foresight = layer.scenes.globaldata:get("foresight")
@@ -113,7 +140,7 @@ function layer.draw()
                 count("Miss")
             end
             if math.abs(diff) < foresight then
-                local y = math.max(75,px-750)
+                local y = math.max(7.5*upscale,px-(75*upscale))
                 love.graphics.setColor(colors[note])
                 love.graphics.draw(images.hitcircle,px,y,0,upscale,upscale)
                 love.graphics.setColor(1,1,1,1)
@@ -130,6 +157,6 @@ function layer.draw()
     if layer.scenes.globaldata:technicallykeydown("w") or layer.scenes.globaldata:technicallykeydown("a") or layer.scenes.globaldata:technicallykeydown("s") or layer.scenes.globaldata:technicallykeydown("d") then
         love.graphics.setColor(1, 1, 1, 1)
     end
-    love.graphics.draw(images.target,hitboxpos+130,15,0,upscale,upscale)
+    love.graphics.draw(images.target,hitboxpos+(13*upscale),(1.5*upscale),0,upscale,upscale)
 end
 return layer

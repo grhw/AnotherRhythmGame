@@ -6,10 +6,7 @@ function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
     scenes:new("game",require("scene/game"))
-    
-    local bm =require("songs.keepout.map")
-    scenes.globaldata:store("map", bm.notes)
-    scenes.globaldata:store("audio", "songs/keepout/" .. bm.meta.audio)
+    scenes:new("selector",require("scene/songselect"))
 
     scenes.globaldata:store("hitbox pos",-50)
     scenes.globaldata:store("colors",{
@@ -19,7 +16,7 @@ function love.load()
         {255/255, 069/255, 000/255}, -- right
     })
     scenes.globaldata:store("foresight",1000)
-    scenes:switch("game",scenes)
+    scenes:switch("selector",scenes)
 end
 
 function love.keypressed(key)
