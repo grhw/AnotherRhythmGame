@@ -2,7 +2,7 @@ local scenes = require("scenes")
 function love.load()
     scenes.globaldata:store("upscale",10)
     love.window.setMode(128*scenes.globaldata:get("upscale"),72*scenes.globaldata:get("upscale"))
-    love.window.setTitle('no name')
+    love.window.setTitle('Another Rhythm Game')
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
     scenes:new("game",require("scene/game"))

@@ -18,7 +18,7 @@ local images = {}
 local upscale = 0
 
 function layer.load(scenes,tween)
-    love.window.setTitle('no name | In-game')
+    love.window.setTitle('ARG | In-game')
     layer.scenes = scenes
     layer.tween = tween
 
