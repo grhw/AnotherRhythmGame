@@ -158,7 +158,7 @@ function layer.draw()
     love.graphics.draw(images.gradient,0,0,0,upscale,upscale)
     love.graphics.draw(images.bg,0,0,0,upscale,upscale)
     
-    if layer.scenes.globaldata:get("autoplay") and getnoteperc(nextnote[2]) > 0.95 then
+    if layer.scenes.globaldata:get("settings")["Other"]["Autoplay"] and getnoteperc(nextnote[2]) > 0.95 then
         presskey(nextnote[1])
     end
 
@@ -191,7 +191,7 @@ function layer.draw()
     end
     love.graphics.setColor(targetcolor[1],targetcolor[2],targetcolor[3], 0.5)
     local tx,ty = hitboxpos+(2*upscale),(1.5*upscale)
-    if layer.scenes.globaldata:technicallykeydown("w") or layer.scenes.globaldata:technicallykeydown("a") or layer.scenes.globaldata:technicallykeydown("s") or layer.scenes.globaldata:technicallykeydown("d") then
+    if layer.scenes.globaldata:technicallykeydown(layer.scenes.globaldata:get("keybinds")["Up"]) or layer.scenes.globaldata:technicallykeydown(layer.scenes.globaldata:get("keybinds")["Left"]) or layer.scenes.globaldata:technicallykeydown(layer.scenes.globaldata:get("keybinds")["Down"]) or layer.scenes.globaldata:technicallykeydown(layer.scenes.globaldata:get("keybinds")["Right"]) then
         love.graphics.setColor(targetcolor)
         love.graphics.draw(images.targetglow,tx-50,ty-50,0,1,1)
     end

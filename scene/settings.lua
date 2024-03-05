@@ -1,3 +1,5 @@
+local files = require "files"
+local json  = require "json"
 local layer = {}
 local selected = 0
 local images = {}
@@ -32,6 +34,7 @@ function layer.update(dt)
         end
     end
     if layer.scenes.globaldata:handlekey(layer.scenes.globaldata:get("keybinds")["Pause"]) then
+        files.save("config","settings.json",json.stringify(layer.scenes.globaldata:get("settings")))
         layer.scenes:switch("main",layer.scenes)
     end
     if type(settings[selci][seli]) == type(1) then
@@ -71,5 +74,6 @@ function layer.draw()
     if length < i then
         length = i
     end
+    layer.scenes.globaldata:store("settings",settings)
 end
 return layer

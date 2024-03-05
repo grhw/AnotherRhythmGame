@@ -1,4 +1,7 @@
 local scenes = require("scenes")
+local firstinstall = require("firstinstall")
+local files        = require("files")
+local json         = require("json")
 local love = love
 
 function love.load()
@@ -13,29 +16,19 @@ function love.load()
     scenes:new("settings",require("scene/settings"))
     scenes:new("keybinds",require("scene/keybinds"))
 
-    scenes.globaldata:store("keybinds", {
-        ["Up"] = "w",
-        ["Down"] = "s",
-        ["Left"] = "a",
-        ["Right"] = "d",
-
-        ["Pause"] = "escape",
-        ["Confirm"] = "return",
-    })
-
-    scenes.globaldata:store("settings", {
-        ["Sound"] = {
-            ["Menu BGM"] = 0.5,
-            ["Music"] = 0.5,
-            ["SFX"] = 0.2,
-        },
-        ["Other"] = {
-            ["Autoplay"] = false  
-        }
-    })
+    local lcs = files.load("config","settings.json")
+    local binds = files.load("config","keybinds.json")
+    if lcs and binds then
+        local plcs = json.parse(lcs)
+        local pbinds = json.parse(binds)
+        scenes.globaldata:store("keybinds", plcs)
+        scenes.globaldata:store("settings", pbinds)
+    else
+        scenes = firstinstall(scenes)
+    end
+    print(scenes.globaldata["Keybinds"])
 
     scenes.globaldata:store("font",love.graphics.newFont("assets/main.ttf", 40))
-    scenes.globaldata:store("autoplay",false)
     scenes.globaldata:store("hitbox pos",60)
     scenes.globaldata:store("colors",{
         {000/255, 191/255, 255/255}, -- up

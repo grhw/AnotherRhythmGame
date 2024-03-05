@@ -29,6 +29,7 @@ function layer.update(dt)
     if layer.scenes.globaldata:handlekey(layer.scenes.globaldata:get("keybinds")["Up"]) then
         selected = selected-1
     end
+   -- print(layer.scenes.globaldata:get("keybinds")["Confirm"])
     if layer.scenes.globaldata:handlekey(layer.scenes.globaldata:get("keybinds")["Confirm"]) then
         layer.scenes:switch(sk,layer.scenes)
     end

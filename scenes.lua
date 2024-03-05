@@ -1,6 +1,7 @@
 local tween = require("tween")
 local scenes = {}
 local public = {}
+print("init")
 scenes.globaldata = {}
 
 scenes.heldkeys = {}
