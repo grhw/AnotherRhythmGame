@@ -12,7 +12,7 @@ function judgements.judge(n)
     for i,v in pairs(judgements.ratings) do
         local requirement, rating = v[1],v[2]
         if n < (requirement)/100 then
-            return rating
+            return rating,requirement
         end
     end
 end
