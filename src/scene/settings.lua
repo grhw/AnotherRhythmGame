@@ -62,6 +62,7 @@ function layer.draw()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.setFont(font)
     love.graphics.draw(images.gradient, 0, 0, 0, upscale, upscale)
+    love.graphics.print("Save folder: "..files.get_real("",""),0,0,0,0.2,0.2)
     local i = 0
     local renderoffset = 0
     local categi = 0
