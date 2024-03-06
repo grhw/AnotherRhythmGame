@@ -1,3 +1,4 @@
+local files = require("files")
 local function init(scenes)
     print("first install")
     scenes.globaldata:store("keybinds", {
@@ -22,6 +23,7 @@ local function init(scenes)
         }
     })
 
+    files.save("songs","readme.txt","drop your song data folders here")
     
     return scenes
 end

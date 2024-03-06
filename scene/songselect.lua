@@ -1,4 +1,5 @@
-local songindex = require("songs.index")
+local songindex = require("songs")
+local files     = require("files")
 local selected = 0
 local upscale = 0
 local love = love
@@ -15,9 +16,8 @@ function layer.load(scenes, tween)
     layer.tween = tween
 
     songs = {}
-    table.sort(songindex)
-    for name, data in pairs(songindex) do
-        table.insert(songs, {data[1], name, data[2]})
+    for folder, data in pairs(songindex.getsongs()) do
+        table.insert(songs, {folder, data})
     end
 
     images.gradient = love.graphics.newImage("assets/gradient.png")
@@ -44,11 +44,10 @@ function layer.update(dt)
     end
     if layer.scenes.globaldata:handlekey(
         layer.scenes.globaldata:get("keybinds")["Confirm"]) then
-        local f = songs[selected + 1][1]
-        local bm = require("songs." .. f .. ".map")
+        local bm = songs[selected + 1][2]
+        files.duplicate(bm.audio,"session/"..bm.audioname)
         layer.scenes.globaldata:store("map", bm.notes)
-        layer.scenes.globaldata:store("audio",
-                                      "songs/" .. f .. "/" .. bm.meta.audio)
+        layer.scenes.globaldata:store("audio", "session/"..bm.audioname)
 
         layer.scenes:switch("game", layer.scenes)
     end
@@ -72,8 +71,8 @@ function layer.draw()
             love.graphics.setColor(1, 1, 1, 0.5)
         end
         love.graphics.draw(images.map, x, y, 0, upscale, upscale)
-        love.graphics.print(v[2], (x + (140 * upscale)), y + upscale)
-        love.graphics.print(v[3], (x + (140 * upscale)), (y + upscale) + 60)
+        love.graphics.print(v[2].title, (x + (140 * upscale)), y + upscale)
+        love.graphics.print(v[2].artist, (x + (140 * upscale)), (y + upscale) + 60)
     end
     -- love.graphics.print(songs[selected+1][1],0,36*upscale)
 end

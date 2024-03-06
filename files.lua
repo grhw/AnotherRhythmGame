@@ -59,4 +59,40 @@ function files.ls(folder)
 	end
 	return love.filesystem.getDirectoryItems(folder)
 end
+
+function files.inspect(folder,path)
+	love.filesystem.setIdentity("AnotherRhythmGame",false)
+	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder,false)
+	return love.filesystem.getInfo(path)
+end
+
+function files.require(folder,file)
+	love.filesystem.setIdentity("AnotherRhythmGame",false)
+	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder,false)
+	return love.filesystem.load(file)()
+end
+
+function files.duplicate(fromfile,tofolder)
+	local copied = io.open(fromfile, "rb")
+	local pasted = io.open(tofolder, "w+b")
+	if copied and pasted then -- lol
+		pasted:write(copied:read("*all"))
+		copied:close()
+		pasted:close()
+	end
+end
+
+function files.duplicate_to_game(folder,file,gamefolder) -- it's  files.duplicate() but files.get_real() first 
+	love.filesystem.setIdentity("AnotherRhythmGame",false)
+	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder,false)
+	local real -- how to make the warning stfu
+	real = files.get_real(folder,file)
+	files.duplicate(real,gamefolder)
+end
+
+function files.get_real(folder,file) -- GET REAL
+	love.filesystem.setIdentity("AnotherRhythmGame",false)
+	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder,false)
+	return love.filesystem.getRealDirectory(file).. "/"..file
+end
 return files
