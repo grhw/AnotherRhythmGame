@@ -34,7 +34,7 @@ function files.save(folder,file,content)
 	if not love.filesystem.getInfo(folder) then
 		love.filesystem.createDirectory(folder)
 	end
-	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder)
+	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder,false)
 	love.filesystem.write(file,content)
 end
 
@@ -43,9 +43,10 @@ function files.load(folder,file)
 	if not love.filesystem.getInfo(folder) then
 		love.filesystem.createDirectory(folder)
 	end
-	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder)
+	love.filesystem.setIdentity("AnotherRhythmGame/" .. folder,false)
 	if love.filesystem.getInfo(file) then
-		return love.filesystem.read(file)
+		local fl = love.filesystem.read(file)
+		return fl
 	end
 	return false
 end

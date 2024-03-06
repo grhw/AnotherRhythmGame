@@ -1,5 +1,5 @@
 local files = require "files"
-local json  = require "json"
+local json  = require "jsonstressesmeout"
 local layer = {}
 local selected = 0
 local images = {}
@@ -34,7 +34,7 @@ function layer.update(dt)
         end
     end
     if layer.scenes.globaldata:handlekey(layer.scenes.globaldata:get("keybinds")["Pause"]) then
-        files.save("config","settings.json",json.stringify(layer.scenes.globaldata:get("settings")))
+        files.save("config","settings.jsmo",json.encode(layer.scenes.globaldata:get("settings")))
         layer.scenes:switch("main",layer.scenes)
     end
     if type(settings[selci][seli]) == type(1) then

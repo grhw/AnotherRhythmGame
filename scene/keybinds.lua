@@ -1,4 +1,4 @@
-local json = require "json"
+local json = require "jsonstressesmeout"
 local files= require "files"
 local layer = {}
 local selected = 0
@@ -36,7 +36,7 @@ function layer.update(dt)
         waitingfor = selkey
     end
     if layer.scenes.globaldata:handlekey(layer.scenes.globaldata:get("keybinds")["Pause"]) then
-        files.save("config","keybinds.json",json.stringify(layer.scenes.globaldata:get("keybinds")))
+        files.save("config","keybinds.jsmo",json.encode(layer.scenes.globaldata:get("keybinds")))
         layer.scenes:switch("main",layer.scenes)
     end
     if layer.scenes.globaldata:handlekey(layer.scenes.globaldata:get("keybinds")["Down"]) then
