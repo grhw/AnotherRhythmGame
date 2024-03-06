@@ -32,14 +32,11 @@ function jsmo.decode(encode)
         local currentTable = decodedTable
         for i, key in ipairs(keys) do
             local d = {}
-            print(nvalue)
             for v in nvalue:gmatch("[^\\-\\-]+") do
                 table.insert(d,v)
-                print(v)
             end
             local value = d[1]
             local valuetype = d[2]
-            print(value,valuetype)
             if i == #keys then
                 if valuetype == tostring(type("")) then
                     currentTable[tostring(key)] = tostring(value)

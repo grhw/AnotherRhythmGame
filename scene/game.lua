@@ -68,7 +68,7 @@ function layer.load(scenes, tween)
                                  "assets/judgements/Great.png")
     images.judges["Okay"] = love.graphics.newImage("assets/judgements/Okay.png")
     images.judges["Bad"] = love.graphics.newImage("assets/judgements/Bad.png")
-    images.judges["Misnput"] = love.graphics.newImage(
+    images.judges["Misinput"] = love.graphics.newImage(
                                    "assets/judgements/Misinput.png")
     images.judges["Miss"] = love.graphics.newImage("assets/judgements/Miss.png")
 

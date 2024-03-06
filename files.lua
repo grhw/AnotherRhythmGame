@@ -23,7 +23,7 @@ end
 function files.unzip(file, dir, delete)
 	local dir = dir or ""
 	local temp = tostring(math.random(1000, 2000))
-	success = lfs.mount(file, temp)
+	local success = lfs.mount(file, temp)
 		if success then enu(temp, dir) end
 	lfs.unmount(file)
 	if delete then lfs.remove(file) end
