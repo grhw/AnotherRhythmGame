@@ -19,5 +19,15 @@ final = []
 for i in notes.keys():
     final.append(f"[{i}] = {notes[i]}")
 
+
+
 with open("map.lua","w+") as f:
-    f.write('local map = {}\nmap.meta = {\n    ["title"] = "",\n    ["creator"] = "",\n    ["audio"] = "audio.ogg"\n}\n\nmap.notes = {' + ",".join(final) + '}\nreturn map')
+    f.write('''local map = {}
+map.meta = {
+    ["title"] = "",
+    ["creator"] = "",
+    ["artist"] = ""
+}
+map.audio = "audio.mp3"
+            
+''' + 'map.notes = {' + ",".join(final) + '}\nreturn map')
