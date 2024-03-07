@@ -3,4 +3,4 @@
 
 
 ## How to map
-devtools.md
+[devtools.md](https://github.com/gustwho/AnotherRhythmGame/blob/main/src/devtools/devtools.md)
